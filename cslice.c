@@ -6,11 +6,12 @@
 /*   By: lmilando <lmilando@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 11:28:14 by lmilando          #+#    #+#             */
-/*   Updated: 2026/05/06 23:17:45 by lmilando         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:02:29 by lmilando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cslice.h"
+#include <sys/param.h>
 
 /*Creation and destruction*/
 t_sl*	sl_new(size_t cap)
@@ -35,8 +36,7 @@ bool	sl_resize_cap(t_sl *s, size_t cap)
 	if (!new_str)
 		return false;
 	s->cap = cap;
-	if (s->len > cap)
-		s->len = cap;
+	s->len = MIN(cap, s->len);
 	for (size_t i = 0; i < s->len; ++i)
 		new_str[i] = (s->str)[i];
 	new_str[s->len] = '\0';
@@ -85,11 +85,7 @@ t_sl*	sl_sub_new(t_sl const *b, size_t start, size_t maxlen)
 	t_sl sl_null = {.str = "", .cap = 0, .len = 0};
 	size_t cap = 0;
 	if (b->len > start)
-	{
-		cap = start - b->len;
-		if (cap > maxlen)
-			cap = maxlen;
-	}
+		cap = MIN(start -  b->len, maxlen);
 	if (cap == 0)
 		return sl_clone_new(&sl_null);
 	t_sl *r = sl_new(cap);
@@ -137,10 +133,7 @@ size_t	sl_copy(t_sl *dest, t_sl const *src, size_t maxlen)
 {
 	if (!dest || !src || !maxlen)
 		return 0;
-	if (maxlen > dest->cap)
-		maxlen = dest->cap;
-	if (maxlen > src->len)
-		maxlen = src->len;
+	maxlen = MIN(maxlen, MIN(dest->cap, src->len));
 	for (dest->len = 0; dest->len < maxlen; ++(dest->len))
 		(dest->str)[dest->len] = (src->str)[dest->len];
 	(dest->str)[dest->len] = '\0';

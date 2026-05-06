@@ -7,7 +7,7 @@
 		do {										\
 			assert(expr);  							\
 			fprintf(stderr, "[OK] %s\n", #expr);	\
-		} while (0)									\
+		} while (0)
 
 void test_sl_new(size_t cap)
 {
