@@ -6,7 +6,7 @@
 /*   By: lmilando <lmilando@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 11:28:14 by lmilando          #+#    #+#             */
-/*   Updated: 2026/05/06 21:56:28 by lmilando         ###   ########.fr       */
+/*   Updated: 2026/05/06 23:17:45 by lmilando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,8 @@ ssize_t sl_indexof(t_sl const *b, char c, size_t start, size_t maxlen)
 ssize_t	sl_indexof_sl(t_sl const *haystack, t_sl const *needle);
 ssize_t sl_count(t_sl const *b, char c, size_t start, size_t maxlen);
 ssize_t sl_lastindexof(t_sl const *b, char c, size_t minindex);
-int		sl_compare(t_sl const *a, t_sl const *b);
-bool	sl_contains_sl(t_sl const *a, t_sl const *b);
+int		sl_compare(t_sl const *a, t_sl const *b, size_t maxlen);
+bool	sl_contains_sl(t_sl const *a, t_sl const *b, size_t maxlen);
 bool	sl_equal(t_sl const *a, t_sl const *b);
 bool	sl_hasprefix(t_sl const *a, t_sl const *b);
 bool	sl_hassuffix(t_sl const *a, t_sl const *b);
