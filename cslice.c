@@ -6,14 +6,13 @@
 /*   By: lmilando <lmilando@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 11:28:14 by lmilando          #+#    #+#             */
-/*   Updated: 2026/05/07 01:02:29 by lmilando         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:51:17 by lmilando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cslice.h"
 #include <sys/param.h>
 
-/*Creation and destruction*/
 t_sl*	sl_new(size_t cap)
 {
 	t_sl * r = malloc(sizeof(t_sl));
@@ -62,7 +61,6 @@ void	sl_free_array(t_sl **arr)
 	free(arr);
 }
 
-/*Creation from existing data*/
 t_sl*	sl_clone_new(t_sl const *b)
 {
 	if (!b)
@@ -128,7 +126,6 @@ t_sl*	sl_repeat_new(t_sl const *a, size_t n)
 	return r;
 }
 
-/*Mutation*/
 size_t	sl_copy(t_sl *dest, t_sl const *src, size_t maxlen)
 {
 	if (!dest || !src || !maxlen)
@@ -139,7 +136,7 @@ size_t	sl_copy(t_sl *dest, t_sl const *src, size_t maxlen)
 	(dest->str)[dest->len] = '\0';
 	return (dest->len - 1);
 }
-/* Cut */
+
 ssize_t sl_cut(t_sl const *s, char sep, t_sl **before, t_sl **after)
 {
 	if (!s)
@@ -163,10 +160,7 @@ ssize_t sl_cut(t_sl const *s, char sep, t_sl **before, t_sl **after)
 	}
 	return pos;
 }
-ssize_t sl_cut_sl(t_sl const *b, t_sl const *sep, t_sl **before, t_sl **after);
 
-
-/*Search and compare*/
 ssize_t sl_indexof(t_sl const *b, char c, size_t start, size_t maxlen)
 {
 	if (!b)
@@ -175,16 +169,3 @@ ssize_t sl_indexof(t_sl const *b, char c, size_t start, size_t maxlen)
 	for (; i < b->len && i < maxlen && (b->str)[i] != c; ++i);
 	return ((b->str)[i] == c) ? (ssize_t) i : -1;
 }
-
-ssize_t	sl_indexof_sl(t_sl const *haystack, t_sl const *needle);
-ssize_t sl_count(t_sl const *b, char c, size_t start, size_t maxlen);
-ssize_t sl_lastindexof(t_sl const *b, char c, size_t minindex);
-int		sl_compare(t_sl const *a, t_sl const *b, size_t maxlen);
-bool	sl_contains_sl(t_sl const *a, t_sl const *b, size_t maxlen);
-bool	sl_equal(t_sl const *a, t_sl const *b);
-bool	sl_hasprefix(t_sl const *a, t_sl const *b);
-bool	sl_hassuffix(t_sl const *a, t_sl const *b);
-
-/*Split and Join */
-t_sl**	sl_split(t_sl const *b, t_sl const *sep, size_t start, size_t maxlen);
-t_sl*	sl_join(t_sl const **s, t_sl const *sep);

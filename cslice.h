@@ -6,7 +6,7 @@
 /*   By: lmilando <lmilando@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 11:28:14 by lmilando          #+#    #+#             */
-/*   Updated: 2026/05/06 23:18:09 by lmilando         ###   ########.fr       */
+/*   Updated: 2026/05/07 10:50:31 by lmilando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,37 @@ void	sl_free_array(t_sl **arr);
 t_sl*	sl_clone_new(t_sl const *b);
 t_sl*	sl_sub_new(t_sl const *b, size_t start, size_t maxlen);
 t_sl*	sl_concat_new(t_sl const *a, t_sl const *b);
-t_sl*	sl_repeat_new(t_sl const *a, size_t n);
 
 /*Mutation*/
 size_t	sl_copy(t_sl *dest, t_sl const *src, size_t maxlen);
 
-/* Cut */
-ssize_t sl_cut(t_sl const *b, char sep, t_sl **before, t_sl **after);
-ssize_t sl_cut_sl(t_sl const *b, t_sl const *sep, t_sl **before, t_sl **after);
-
-
-/*Search and compare*/
+/*Search*/
 ssize_t sl_indexof(t_sl const *b, char c, size_t start, size_t maxlen);
-ssize_t	sl_indexof_sl(t_sl const *haystack, t_sl const *needle);
+ssize_t	sl_indexof_sl(t_sl const *haystack, t_sl const *needle, size_t maxlen);
 ssize_t sl_count(t_sl const *b, char c, size_t start, size_t maxlen);
 ssize_t sl_lastindexof(t_sl const *b, char c, size_t minindex);
-int		sl_compare(t_sl const *a, t_sl const *b, size_t maxlen);
-bool	sl_contains_sl(t_sl const *a, t_sl const *b, size_t maxlen);
-bool	sl_equal(t_sl const *a, t_sl const *b);
 bool	sl_hasprefix(t_sl const *a, t_sl const *b);
 bool	sl_hassuffix(t_sl const *a, t_sl const *b);
 
-/*Split and Join */
-t_sl**	sl_split(t_sl const *b, t_sl const *sep, size_t start, size_t maxlen);
-t_sl*	sl_join(t_sl const **s, t_sl const *sep);
+/* Comparaison */
+int		sl_compare(t_sl const *a, t_sl const *b, size_t maxlen);
+bool	sl_contains_sl(t_sl const *a, t_sl const *b, size_t maxlen);
+bool	sl_equal(t_sl const *a, t_sl const *b, size_t maxlen);
+
+/*Split and cut*/
+t_sl**	sl_split_new(t_sl const *b, t_sl const *sep, size_t start, size_t maxlen);
+ssize_t	sl_cut(t_sl const *b, char sep, t_sl **before, t_sl **after);
+ssize_t	sl_cut_sl(t_sl const *b, t_sl const *sep, t_sl **before, t_sl **after);
+t_sl*	sl_trim_space_new(t_sl const *b);
+t_sl*	sl_trim_prefix_new(t_sl const *b, t_sl const *prefix);
+t_sl*	sl_trim_suffix_new(t_sl const *b, t_sl const *suffix);
+
+/*Transformation */
+t_sl*	sl_replace_new(t_sl const *s, t_sl const *old, t_sl const *new);
+t_sl*	sl_replace_all_new(t_sl const *s, t_sl const *old, t_sl const *new);
+void	sl_tolower(t_sl *s);
+void	sl_toupper(t_sl *s);
+t_sl*	sl_repeat_new(t_sl const *a, size_t n);
+t_sl*	sl_join_new(t_sl const **arr, t_sl const *sep); /* tableau arr null terminated*/
 
 #endif

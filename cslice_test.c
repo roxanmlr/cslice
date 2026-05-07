@@ -32,6 +32,18 @@ void test_sl_resize_existing_sl(t_sl *s, size_t newcap)
 	ASSERT_OK(!memcmp(str_dup, s->str, s->len));
 	free(str_dup);
 }
+void test_sl_resize_new_sl(size_t cap1, size_t cap2)
+{
+	t_sl *s = sl_new(cap1);
+	if (!s)
+		return ;
+	sl_resize_cap(s, cap2);
+	ASSERT_OK(s);
+	ASSERT_OK(s->str);
+	ASSERT_OK(!(s->str)[s->len]);
+	ASSERT_OK(s->cap >= cap2);
+	sl_free(s);
+}
 
 void test_sl_clone_new(size_t cap)
 {
@@ -47,20 +59,20 @@ void test_sl_clone_new(size_t cap)
 	sl_free(s);
 	sl_free(clone);
 }
-
-void test_sl_resize_new_sl(size_t cap1, size_t cap2)
+void test_sl_sub_new(size_t cap, size_t start, size_t maxlen)
 {
-	t_sl *s = sl_new(cap1);
-	if (!s)
-		return ;
-	sl_resize_cap(s, cap2);
+	t_sl *s = sl_new(cap);
 	ASSERT_OK(s);
-	ASSERT_OK(s->str);
-	ASSERT_OK(!(s->str)[s->len]);
-	ASSERT_OK(s->cap >= cap2);
+	for (size_t i = 0; i < cap; ++i, ++(s->len))
+		(s->str)[i] = rand() % 0x100;
+	t_sl *sub = sl_sub_new(s, start, maxlen);
+	ASSERT_OK(sub);
+	ASSERT_OK(!memcmp(s->str, sub->str, sub->len));
+	ASSERT_OK(sub->cap >= s->cap);
+	ASSERT_OK(sub->len == s->len);
 	sl_free(s);
+	sl_free(sub);
 }
-
 #define STR "01234567890ABCDEFGHIJKL"
 int main(void)
 {
